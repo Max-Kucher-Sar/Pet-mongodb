@@ -8,11 +8,24 @@ from io import BytesIO
 
 load_dotenv()
 
-host = os.getenv('HOST')
-port = int(os.getenv('PORT'))
+user = os.getenv('user')
+pswd = os.getenv('pswd')
 
-client = MongoClient(host, port)
+# client = MongoClient(f'mongodb://{user}:{pswd}@mongodb:27017/')
+client = MongoClient(
+    host="mongodb",
+    port=27017,
+    username=user,
+    password=pswd,
+    authSource="admin"
+)
+
+client.admin.command('ismaster')
+
+
 db = client['filesDB']
+
+
 
 if 'files' in db.list_collection_names():
     collection = db['files']

@@ -6,10 +6,13 @@ services:
     image: mongo:4.4.3
     container_name: mongodb
     restart: unless-stopped
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${user}
+      - MONGO_INITDB_ROOT_PASSWORD=${pswd}
     volumes:
-      - ./database/:/data/db
+      - ./database/data:/data/db
     ports:
       - "27017:27017"
     networks: 
